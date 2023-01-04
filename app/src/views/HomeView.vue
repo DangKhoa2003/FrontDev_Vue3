@@ -78,7 +78,7 @@
 		</div>
 	</div>
 			<div class="row">
-				<div class="col-md-3 col-lg-3 d-flex" v-for="prod in products" :key="prod.id">
+				<div class="col-md-3 col-lg-3 d-flex" v-for="prod in productSixFirst" :key="prod.id">
 					<div class="product">
 						<div class="img d-flex align-items-center justify-content-center" :style="{ backgroundImage: `url(${require('@/assets/images/' + prod.image)})` }">
 							<div class="desc">
@@ -281,6 +281,10 @@ export default defineComponent({
 	computed: {
 		products() {
 			return createStore.state.products
+		},
+
+		productSixFirst() {
+			return createStore.state.products.slice(0, 8);
 		}
 	},
 
