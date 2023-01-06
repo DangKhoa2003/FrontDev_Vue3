@@ -116,6 +116,14 @@
             "price": "$69.00",
             "category": "Tequila",
             "available": 85
+        },
+        {	
+            "id": 14,
+            "name": "Chivas Regal 12 Years Old",
+            "image": "prod-15.jpg",
+            "price": "$69.00",
+            "category": "Chivas",
+            "available": 90
         }
     ]
 }
