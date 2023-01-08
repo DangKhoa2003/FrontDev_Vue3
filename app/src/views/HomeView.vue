@@ -83,7 +83,9 @@
 						<div class="img d-flex align-items-center justify-content-center" :style="{ backgroundImage: `url(${require('@/assets/images/' + prod.image)})` }">
 							<div class="desc">
 								<p class="meta-prod d-flex">
-									<a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
+									<button @click="AddToCart(prod)">
+                                                  <a   class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
+                                             </button>
 									<a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-heart"></span></a>
 									<router-link :to="'/products/0' + prod.id" class="d-flex align-items-center justify-content-center"><span class="flaticon-visibility"></span></router-link>
 								</p>
@@ -263,6 +265,7 @@ import SliderHead from '@/components/SliderHead.vue';
 import FooterF from '@/components/FooterF.vue';
 import SectionIntro from '@/components/SectionIntro.vue';
 import createStore from "@/store/index.js";
+import { mapActions } from 'vuex';
 
 export default defineComponent({
   name: 'HomeView',
@@ -289,7 +292,10 @@ export default defineComponent({
 	},
 
 	mounted() {
-		createStore.dispatch('getProducts')
-	}
+		createStore.dispatch('getProducts',)
+	},
+     methods: {
+          ...mapActions(['AddToCart'])
+     },
 });
 </script>
