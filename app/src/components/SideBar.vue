@@ -48,7 +48,7 @@
           </div>
           <div class="reg">
             <p class="mb-0">
-              <a href="#" class="mr-2">Sign Up</a> <a href="#">Log In</a>
+              <router-link to="/signUp" class="mr-2">Sign Up</router-link> <router-link to="/login">Log In</router-link>
             </p>
           </div>
         </div>
