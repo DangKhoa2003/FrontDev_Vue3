@@ -18,9 +18,9 @@
             <span class="mr-2"
               ><a href="index.html">Home <i class="fa fa-chevron-right"></i></a
             ></span>
-            <span>Login <i class="fa fa-chevron-right"></i></span>
+            <span>Sign Up <i class="fa fa-chevron-right"></i></span>
           </p>
-          <h2 class="mb-0 bread">Page Login</h2>
+          <h2 class="mb-0 bread">Page Register</h2>
         </div>
       </div>
     </div>
@@ -45,16 +45,24 @@
     </div>
 
     <div class="right">
-      <h5>Login</h5>
-      <p>
-        Don't have an account?
-        <router-link to="/signup">Creat Your Account</router-link> it takes less
+      <h5>Register</h5>
+      <p class="right-p">
+        Do have an account?
+        <router-link to="/login">Login Your Account</router-link> it takes less
         than a minute
       </p>
       <div class="inputs">
-        <input type="email" v-model="email" placeholder="email" />
+        <input type="text" v-model="name" placeholder="Enter Name" />
+        <br />
+        <input type="email" v-model="email" placeholder="Enter Email" />
         <br />
         <input type="password" v-model="password" placeholder="password" />
+        <br />
+        <input
+          type="password"
+          v-model="confirmPassword"
+          placeholder="confirm password"
+        />
       </div>
 
       <div class="remember-me--forget-password">
@@ -66,7 +74,7 @@
         <p>forget password?</p>
       </div>
 
-      <button v-on:click="login">Login</button>
+      <button v-on:click="signUp">Sign Up</button>
     </div>
   </div>
   <FooterF />
@@ -79,23 +87,27 @@ import axios from "axios";
 export default {
   data() {
     return {
+      name: "",
       email: "",
       password: "",
+      confirmPassword: "",
     };
   },
   methods: {
-    async login() {
-      let result = await axios.get(
-        `http://localhost:3000/users?email=${this.email}&password=${this.password}`
-      );
+    async signUp() {
+      let result = await axios.post("http://localhost:3000/users/", {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        confirmPassword: this.confirmPassword,
+      });
 
-      if (result.status == 200 && result.data.length > 0) {
-        localStorage.setItem("user-info", JSON.stringify(result.data[0]));
+      if (result.status == 201) {
+        localStorage.setItem("user-info", JSON.stringify(result.data));
         this.$router.push({ name: "home" });
       }
     },
   },
-  
   components: { SideBar, FooterF },
 };
 </script>
@@ -149,7 +161,7 @@ $mainColor: #333333;
 
     // overlay
     .overlay {
-      padding: 30px;
+      padding: 50px;
       width: 100%;
       height: 100%;
       overflow: hidden;
@@ -194,10 +206,14 @@ $mainColor: #333333;
     @media (max-width: 980px) {
       width: 100%;
     }
+    .right-p {
+      margin-top: 50px;
+    }
 
     h5 {
       font-size: 6vmax;
-      margin-bottom: 30px;
+      line-height: 0;
+      // margin-bottom: 30px;
     }
 
     p {

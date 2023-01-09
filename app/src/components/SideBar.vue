@@ -48,7 +48,8 @@
           </div>
           <div class="reg">
             <p class="mb-0">
-              <router-link to="/signUp" class="mr-2">Sign Up</router-link> <router-link to="/login">Log In</router-link>
+              <router-link v-if="!user" to="/signup" class="mr-2">Sign Up</router-link> <router-link v-if="!user" to="/login">Log In</router-link>
+              <router-link v-if="user" v-on:click="logout" to="/" class="mr-2">Logout</router-link>
             </p>
           </div>
         </div>
@@ -110,12 +111,38 @@
           <li class="nav-item">
             <router-link to="/contact" class="nav-link">Contact</router-link>
           </li>
+          <li class="nav-item">
+            <router-link to="/" v-if="user" class="nav-link text-capitalize">Hi {{ user.name }}!</router-link>
+          </li>
         </ul>
       </div>
     </div>
   </nav>
 </template>
 <script>
-export default {};
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      user: null
+    }
+  },
+  methods: {
+    logout() {
+      localStorage.clear();
+      this.$router.push({name: 'login'})
+    }
+  },
+  
+  mounted() {
+    let user = localStorage.getItem("user-info");
+    if (!user) {
+      localStorage.clear();
+    } else {
+      this.user = JSON.parse(user);
+    }
+  },
+};
 </script>
 <style></style>
