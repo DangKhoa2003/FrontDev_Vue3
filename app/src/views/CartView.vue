@@ -133,7 +133,7 @@ export default {
                return this.cart.reduce((a, b) => a + b.qty * b.available, 0)
           },
           TotalPriceShip() {
-               return this.cart.reduce((a, b) => 2 + a + b.qty * b.available, 0)
+               return this.cart.reduce((a, b) => a + b.qty * b.available, 0) + 2;
           }
      },
      methods: {
