@@ -73,7 +73,7 @@
         >
           <span class="flaticon-shopping-bag"></span>
           <div class="d-flex justify-content-center align-items-center">
-            <small>3</small>
+            <small>{{ CartIemCount }}</small>
           </div>
         </router-link>
       </div>
@@ -128,13 +128,18 @@ export default {
       user: null
     }
   },
+  computed: {
+     CartIemCount(){
+          return this.$store.getters.CartIemCount;
+     }
+  },
   methods: {
     logout() {
       localStorage.clear();
       this.$router.push({name: 'login'})
     }
   },
-  
+
   mounted() {
     let user = localStorage.getItem("user-info");
     if (!user) {

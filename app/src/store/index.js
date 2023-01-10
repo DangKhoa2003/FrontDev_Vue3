@@ -1,18 +1,23 @@
 import { createStore } from "vuex";
 import axios from "axios";
 import store from "../store";
+import swal from 'sweetalert2';
 
 export default createStore({
   state: {
+     paypalDescription:'',
+     TotalPriceShip:0,
     store,
     products: [],
     product: null,
     transactions: [],
     cart: [],
+    
   },
   getters: {
     trans: (state) => state.transactions,
     cart: (state) => state.cart,
+    CartIemCount:(state) => state.cart.length,
   },
 
   mutations: {
@@ -28,12 +33,20 @@ export default createStore({
       state.transactions = payload;
     },
     AddItemToCart(state, prod) {
+     window.Swal = swal;
       const AddedItem = state.cart.find((product) => product.id === prod.id);
       if (AddedItem) {
         AddedItem.qty++;
       } else {
         state.cart.push({ ...prod, qty: 1 });
       }
+      swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Added to your cart',
+          showConfirmButton: false,
+          timer: 1500
+        })
     },
     AddQty(state, id) {
       const currentItem = state.cart.find((product) => product.id === id);

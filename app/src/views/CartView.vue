@@ -1,28 +1,51 @@
 <!-- eslint-disable no-undef -->
 <template>
+
      <div class="ShoppingCart">
+          <SideBar />
+          <section class="hero-wrap hero-wrap-2" :style="{
+               'background-image':
+                    'url(' + require('../../src/assets/images/bg_2.jpg') + ')',
+          }" data-stellar-background-ratio="0.5">
+               <div class="overlay"></div>
+               <div class="container">
+                    <div class="row no-gutters slider-text align-items-end justify-content-center">
+                         <div class="col-md-9 mb-5 text-center">
+                              <p class="breadcrumbs mb-0">
+                                   <span class="mr-2"><a href="index.html">Home <i
+                                                  class="fa fa-chevron-right"></i></a></span>
+                                   <span>Shopping Bag <i class="fa fa-chevron-right"></i></span>
+                              </p>
+                              <h2 class="mb-0 bread">Shopping Bag</h2>
+                         </div>
+                    </div>
+               </div>
+          </section>
           <div class="container px-4 py-5 mx-auto">
                <div class="row d-flex justify-content-center">
-                    <div class="col-5">
+                    <div class="col-4">
                          <h4 class="heading">Shopping Bag</h4>
                     </div>
-                    <div class="col-7">
+                    <div class="col-8">
                          <div class="row text-right">
-                              <div class="col-4">
+                              <div class="col-3">
                                    <h6 class="mt-2">Format</h6>
                               </div>
-                              <div class="col-4">
+                              <div class="col-3">
                                    <h6 class="mt-2">Quantity</h6>
                               </div>
-                              <div class="col-4">
+                              <div class="col-3">
                                    <h6 class="mt-2">Price</h6>
+                              </div>
+                              <div class="col-3">
+                                   <h6 class="mt-2">Action</h6>
                               </div>
                          </div>
                     </div>
                </div>
 
                <div class="row d-flex justify-content-center border-top" v-for="prod in cart" :key="prod.id">
-                    <div class="col-5">
+                    <div class="col-4">
                          <div class="row d-flex">
                               <div class="book img"
                                    :style="{ backgroundImage: `url(${require('@/assets/images/' + prod.image)})` }">
@@ -34,12 +57,12 @@
                               </div>
                          </div>
                     </div>
-                    <div class="my-auto col-7">
+                    <div class="my-auto col-8">
                          <div class="row text-right">
-                              <div class="col-4">
+                              <div class="col-3">
                                    <p class="mob-text">{{ prod.category }}</p>
                               </div>
-                              <div class="col-4">
+                              <div class="col-3">
                                    <div class="row d-flex justify-content-end px-3">
                                         <p class="mb-0" id="cnt2">{{ prod.qty }}</p>
                                         <div class="d-flex flex-column plus-minus">
@@ -48,8 +71,11 @@
                                         </div>
                                    </div>
                               </div>
-                              <div class="col-4">
+                              <div class="col-3">
                                    <h6 class="mob-text">${{ prod.available }}</h6>
+                              </div>
+                              <div class="col-3">
+                                   <button @click="RemoveItem(prod.id)" class="vsm-text">&#10006;</button>
                               </div>
                          </div>
                     </div>
@@ -59,43 +85,18 @@
                     <div class="col-lg-12">
                          <div class="card">
                               <div class="row">
-                                   <div class="col-lg-3 radio-group">
-                                        <div class="row d-flex px-3 radio">
-                                             <img class="pay" src="https://i.imgur.com/WIAP9Ku.jpg">
-                                             <p class="my-auto">Credit Card</p>
-                                        </div>
-                                        <div class="row d-flex px-3 radio gray">
-                                             <img class="pay" src="https://i.imgur.com/OdxcctP.jpg">
-                                             <p class="my-auto">Debit Card</p>
-                                        </div>
-                                        <div class="row d-flex px-3 radio gray mb-3">
-                                             <img class="pay" src="https://i.imgur.com/cMk1MtK.jpg">
-                                             <p class="my-auto">PayPal</p>
-                                        </div>
+                                   <div class="col-lg-8">
+                                        <h2 class="text-code">your discount code</h2>
+                                        <input type="text" placeholder="VD : C N X 5 8 P A">
+                                        <button class="btn-block btn-blue Paypal" @click="paymethod()">
+                                             <span>
+                                                  <span id="checkout">Checkout in paypal</span>
+                                                  <span id="check-amt">${{ TotalPriceShip }}</span>
+                                             </span>
+                                        </button>
+                                        <div ref="paypal"></div>
                                    </div>
-                                   <div class="col-lg-5">
-                                        <div class="row px-2">
-                                             <div class="form-group col-md-6">
-                                                  <label class="form-control-label">Name on Card</label>
-                                                  <input type="text" id="cname" name="cname" placeholder="Johnny Doe">
-                                             </div>
-                                             <div class="form-group col-md-6">
-                                                  <label class="form-control-label">Card Number</label>
-                                                  <input type="text" id="cnum" name="cnum"
-                                                       placeholder="1111 2222 3333 4444">
-                                             </div>
-                                        </div>
-                                        <div class="row px-2">
-                                             <div class="form-group col-md-6">
-                                                  <label class="form-control-label">Expiration Date</label>
-                                                  <input type="text" id="exp" name="exp" placeholder="MM/YYYY">
-                                             </div>
-                                             <div class="form-group col-md-6">
-                                                  <label class="form-control-label">CVV</label>
-                                                  <input type="text" id="cvv" name="cvv" placeholder="***">
-                                             </div>
-                                        </div>
-                                   </div>
+
                                    <div class="col-lg-4 mt-2">
                                         <div class="row d-flex justify-content-between px-4">
                                              <p class="mb-1 text-left">Subtotal</p>
@@ -125,9 +126,23 @@
 </template>
 
 <script>
+import swal from 'sweetalert2';
+import SideBar from '@/components/SideBar.vue';
 import { mapGetters, mapActions } from 'vuex';
+
 export default {
+     components: {
+          SideBar,
+
+     },
+     data: function () {
+          return {
+               loaded: false,
+               paidFor: false,
+          };
+     },
      computed: {
+
           ...mapGetters(['cart']),
           TotalPrice() {
                return this.cart.reduce((a, b) => a + b.qty * b.available, 0)
@@ -137,7 +152,49 @@ export default {
           }
      },
      methods: {
-          ...mapActions(['ReduceQty', 'AddQty'])
+          ...mapActions(['ReduceQty', 'AddQty', 'RemoveItem']),
+          // 
+          paymethod: function () {
+               const script = document.createElement("script");
+               script.src =
+                    "https://www.paypal.com/sdk/js?client-id=AUVdRP28Ex_LghP2ubCW1Usq1twLn0AMYSe2va_LNcdMMttjagAqkgXg9jvkVy7xzk-KG-MbEJnNbaJo";
+               script.addEventListener("load", this.setLoaded);
+               document.body.appendChild(script);
+          },
+          setLoaded: function () {
+               this.loaded = true;
+               window.paypal
+                    .Buttons({
+                         createOrder: (data, actions) => {
+                              return actions.order.create({
+                                   purchase_units: [
+                                        {
+                                             description: this.paypalDescription,
+                                             amount: {
+                                                  currency_code: "USD",
+                                                  value: this.TotalPriceShip
+                                             }
+                                        }
+                                   ]
+                              });
+                         },
+                         onApprove: async (data, actions) => {
+                              window.Swal = swal;
+                              const order = await actions.order.capture();
+                              this.paidFor = swal.fire(
+                                   'Good job!',
+                                   'You clicked the button!',
+                                   'success'
+                              )
+                              console.log(order);
+                         },
+                         onError: err => {
+                              console.log(err);
+                         }
+                    })
+                    .render(this.$refs.paypal);
+          },
+
      }
 }
 </script>
@@ -150,6 +207,14 @@ body {
      background-color: #fff;
      background-repeat: no-repeat;
 }
+
+.text-code {
+     text-align: center;
+     text-transform: uppercase;
+     font-family: 'Poppins', sans-serif;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 .plus-minus {
      position: relative;
