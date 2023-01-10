@@ -3,6 +3,7 @@
 
      <div class="ShoppingCart">
           <SideBar />
+          
           <section class="hero-wrap hero-wrap-2" :style="{
                'background-image':
                     'url(' + require('../../src/assets/images/bg_2.jpg') + ')',
@@ -21,7 +22,34 @@
                     </div>
                </div>
           </section>
-          <div class="container px-4 py-5 mx-auto">
+          <div class="container-fluid  mt-100" v-if="cart.length == 0">
+               <div class="row">
+
+                    <div class="col-md-12">
+
+                         <div class="card">
+                              <div class="card-header">
+                                   <h5>Shopping Bag</h5>
+                              </div>
+                              <div class="card-body cart">
+                                   <div class="col-sm-12 empty-cart-cls text-center">
+                                        <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130"
+                                             class="img-fluid mb-4 mr-3">
+                                        <h3><strong>Your Cart is Empty</strong></h3>
+                                        <h4>Add something to make me happy :)</h4>
+                                        <router-link to="/" class="btn btn-primary cart-btn-transform m-3"
+                                             data-abc="true">continue shopping</router-link>
+                                   </div>
+                              </div>
+                         </div>
+
+
+                    </div>
+
+               </div>
+
+          </div>
+          <div class="container px-4 py-5 mx-auto" v-if="cart.length > 0">
                <div class="row d-flex justify-content-center">
                     <div class="col-4">
                          <h4 class="heading">Shopping Bag</h4>
@@ -65,7 +93,7 @@
                               <div class="col-3">
                                    <div class="row d-flex justify-content-end px-3">
                                         <p class="mb-0" id="cnt2">{{ prod.qty }}</p>
-                                        <div class="d-flex flex-column plus-minus">
+                                        <div class="d-block flex-column plus-minus">
                                              <button @click="AddQty(prod.id)" class="vsm-text plus">+</button>
                                              <button @click="ReduceQty(prod.id)" class="vsm-text minus">-</button>
                                         </div>
@@ -133,7 +161,6 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
      components: {
           SideBar,
-
      },
      data: function () {
           return {
@@ -222,14 +249,19 @@ body {
 
 .plus {
      position: absolute;
-     top: -4px;
+     top: -6px;
      left: 2px;
      cursor: pointer;
+     padding: auto;
+     height: 5px;
+
 }
 
 .minus {
+     padding: auto;
      position: absolute;
-     top: 8px;
+     height: 5px;
+     top: 10px;
      left: 5px;
      cursor: pointer;
 }
