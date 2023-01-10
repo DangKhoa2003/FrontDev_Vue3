@@ -182,8 +182,8 @@ export default {
                               window.Swal = swal;
                               const order = await actions.order.capture();
                               this.paidFor = swal.fire(
-                                   'Good job!',
-                                   'You clicked the button!',
+                                   'thank you!',
+                                   'Order Success!',
                                    'success'
                               )
                               console.log(order);
