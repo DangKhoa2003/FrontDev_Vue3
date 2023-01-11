@@ -133,20 +133,6 @@
       "password": "123456",
       "confirmPassword": "123456",
       "id": 1
-    },
-    {
-      "name": "Minh",
-      "email": "minh123@gmail.com",
-      "password": "123",
-      "confirmPassword": "123",
-      "id": 2
-    },
-    {
-      "name": "Thuận",
-      "email": "thuan123@gmail.com",
-      "password": "1234",
-      "confirmPassword": "1234",
-      "id": 3
     }
   ]
 }

@@ -43,7 +43,6 @@
         </span>
       </div>
     </div>
-
     <div class="right">
       <h5>Login</h5>
       <p>
@@ -52,9 +51,25 @@
         than a minute
       </p>
       <div class="inputs">
-        <input type="email" v-model="email" placeholder="email" />
+        <div class="parent-input">
+          <input type="email" v-model="email" placeholder="email" v-on:input="e => handleInputChange(e)" v-on:blur="validate()" v-bind:class="{'is-invalid': errors.email || errors.emailRegex}" />
+          <span class="text-danger" v-if="errors.email">
+            {{ errors.email }}
+          </span>
+          <br>
+          <span v-if="errors.emailRegex" class="text-danger">{{ errors.emailRegex }}</span>
+        </div>
         <br />
-        <input type="password" v-model="password" placeholder="password" />
+        <div class="parent-input">
+          <input type="password" v-model="password" placeholder="password" v-on:input="e => handleInputChange(e)" v-on:blur="validate()" v-bind:class="{'is-invalid': errors.password || errors.minLength}" />
+          <span class="text-danger" v-if="errors.password">
+            {{ errors.password }}
+          </span>
+          <br>
+          <span class="text-danger" v-if="errors.minLength">
+            {{ errors.minLength }}
+          </span>
+        </div>
       </div>
 
       <div class="remember-me--forget-password">
@@ -81,9 +96,53 @@ export default {
     return {
       email: "",
       password: "",
+      regex: new RegExp('[a-z0-9]+@[a-z]+\\.[a-z]{2,3}'),
+      errors: {
+        email: "",
+        password: "",
+        emailRegex: "",
+        minLength: "",
+      }
     };
   },
   methods: {
+    validate() {
+      this.errors = {
+        email: "",
+        password: "",
+        emailRegex: "",
+        minLength: "",
+      }
+      if (!this.email) {
+        this.errors.email = 'Email is required' 
+      }
+      if (!this.password) {
+        this.errors.password = 'Password is required' 
+      }
+
+      if (!this.regex.test(this.email)) {
+        this.errors.emailRegex = 'This field must be Email'
+      }
+  
+      if (this.password.length < 5) {
+        this.errors.minLength = 'Please enter at least 5 characters' 
+      }
+    },
+    handleInputChange(e) {
+      if (this.email) {
+        this.errors.email = '' 
+      }
+      if (this.password) {
+        this.errors.password = '' 
+      }
+      if (this.regex.test(this.email)) {
+        this.errors.emailRegex = ''
+      }
+      if (this.password.length >= 5) {
+        this.errors.minLength = '' 
+      }
+      e.target.classList.remove('is-invalid')
+    },
     async login() {
       let result = await axios.get(
         `http://localhost:3000/users?email=${this.email}&password=${this.password}`
@@ -120,13 +179,13 @@ $mainColor: #333333;
 .box-form {
   margin: auto;
   width: 80%;
+  height: max-content;
   background: #ffffff;
   border-radius: 10px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   box-shadow: 0 0 20px 6px #090b6f85;
 
   @media (max-width: 980px) {
@@ -188,8 +247,7 @@ $mainColor: #333333;
   }
 
   .right {
-    padding: 40px;
-    overflow: hidden;
+    padding: 15px 20px;
 
     @media (max-width: 980px) {
       width: 100%;
@@ -217,6 +275,9 @@ $mainColor: #333333;
       border: none;
       outline: none;
       border-bottom: 2px solid #b0b3b9;
+    }
+    input.is-invalid {
+      border-bottom: 2px solid #EE0000;
     }
 
     .remember-me--forget-password {

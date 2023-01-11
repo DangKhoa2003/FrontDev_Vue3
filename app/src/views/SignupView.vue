@@ -43,39 +43,69 @@
         </span>
       </div>
     </div>
-
-    <div class="right">
-      <h5>Register</h5>
-      <p class="right-p">
-        Do have an account?
-        <router-link to="/login">Login Your Account</router-link> it takes less
-        than a minute
-      </p>
-      <div class="inputs">
-        <input type="text" v-model="name" placeholder="Enter Name" />
-        <br />
-        <input type="email" v-model="email" placeholder="Enter Email" />
-        <br />
-        <input type="password" v-model="password" placeholder="password" />
-        <br />
-        <input
-          type="password"
-          v-model="confirmPassword"
-          placeholder="confirm password"
-        />
+    <form action="" @submit.prevent="save()">
+      <div class="right">
+        <h5>Register</h5>
+        <p class="right-p">
+          Do have an account?
+          <router-link to="/login">Login Your Account</router-link> it takes less
+          than a minute
+        </p>
+        <div class="inputs">
+          <div class="parent-input">
+            <input type="text" required v-model="name" placeholder="Enter Name" v-on:input="e => handleInputChange(e)" v-on:blur="validate()" v-bind:class="{'is-invalid': errors.name}" />
+            <span class="text-danger" v-if="errors.name">
+              {{ errors.name }}
+            </span>
+          </div>
+  
+          <div class="parent-input">
+            <input type="email" required v-model="email" placeholder="Enter Email" v-on:input="e => handleInputChange(e)" v-on:blur="validate()" v-bind:class="{'is-invalid': errors.email || errors.emailRegex}" />
+            <span class="text-danger" v-if="errors.email">
+              {{ errors.email }}
+            </span>
+            <br>
+            <span v-if="errors.emailRegex" class="text-danger">{{ errors.emailRegex }}</span>
+          </div>
+          
+          <div class="parent-input">
+            <input type="password" required v-model="password" placeholder="password" v-on:input="e => handleInputChange(e)" v-on:blur="validate()" v-bind:class="{'is-invalid': errors.password || errors.minLength}" />
+            <span class="text-danger" v-if="errors.password">
+              {{ errors.password }}
+            </span>
+            <br>
+            <span class="text-danger" v-if="errors.minLength">
+              {{ errors.minLength }}
+            </span>
+          </div>
+          <div class="parent-input">
+            <input
+              required
+              type="password"
+              v-model="confirmPassword"
+              placeholder="confirm password"
+              v-on:input="e => handleInputChange(e)" v-on:blur="validate()" v-bind:class="{'is-invalid': errors.confirmPassword}"
+            />
+            <span class="text-danger" v-if="errors.confirmPassword">
+              {{ errors.confirmPassword }}
+            </span>
+            <br>
+            
+          </div>
+        </div>
+  
+        <div class="remember-me--forget-password">
+          <!-- Angular -->
+          <label>
+            <input type="checkbox" name="item" checked />
+            <span class="text-checkbox">Remember me</span>
+          </label>
+          <p>forget password?</p>
+        </div>
+  
+        <button v-on:click="signUp">Sign Up</button>
       </div>
-
-      <div class="remember-me--forget-password">
-        <!-- Angular -->
-        <label>
-          <input type="checkbox" name="item" checked />
-          <span class="text-checkbox">Remember me</span>
-        </label>
-        <p>forget password?</p>
-      </div>
-
-      <button v-on:click="signUp">Sign Up</button>
-    </div>
+    </form>
   </div>
   <FooterF />
 </template>
@@ -91,20 +121,95 @@ export default {
       email: "",
       password: "",
       confirmPassword: "",
+      regex: new RegExp('[a-z0-9]+@[a-z]+\\.[a-z]{2,3}'),
+      errors: {
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        emailRegex: "",
+        minLength: "",
+      }
     };
   },
   methods: {
-    async signUp() {
-      let result = await axios.post("http://localhost:3000/users/", {
-        name: this.name,
-        email: this.email,
-        password: this.password,
-        confirmPassword: this.confirmPassword,
-      });
+    validate() {
+      this.errors = {
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        emailRegex: "",
+        minLength: "",
+      }
+      if (!this.email) {
+        this.errors.email = 'Email is required' 
+      }
 
-      if (result.status == 201) {
-        localStorage.setItem("user-info", JSON.stringify(result.data));
-        this.$router.push({ name: "home" });
+      if (!this.name) {
+        this.errors.name = 'Name is required' 
+      }
+      if (!this.password) {
+        this.errors.password = 'Password is required' 
+      }
+
+      if (!this.confirmPassword) {
+        this.errors.confirmPassword = 'Please enter this field' 
+      }
+
+      if (this.confirmPassword != this.password) {
+        this.errors.confirmPassword = 'Re-entered password is wrong'
+      }
+
+      if (!this.regex.test(this.email)) {
+        this.errors.emailRegex = 'This field must be Email'
+      }
+  
+      if (this.password.length < 5) {
+        this.errors.minLength = 'Please enter at least 5 characters' 
+      }
+    },
+    handleInputChange(e) {
+      if (this.email) {
+        this.errors.email = '' 
+      }
+      if (this.name) {
+        this.errors.name = '' 
+      }
+      if (this.password) {
+        this.errors.password = '' 
+      }
+      if (this.confirmPassword) {
+        this.errors.confirmPassword = '' 
+      }
+      if (this.regex.test(this.email)) {
+        this.errors.emailRegex = ''
+      }
+      if (this.password.length >= 5) {
+        this.errors.minLength = '' 
+      }
+
+      if (this.confirmPassword === this.password) {
+        this.errors.confirmPassword = ''
+      }
+      e.target.classList.remove('is-invalid')
+    },
+    save() {
+      this.validate()
+    },
+    async signUp() {
+      if (this.confirmPassword === this.password && this.email.length > 0 && this.name.length > 0 && this.password.length > 0 && this.regex.test(this.email) && this.password.length >= 5) {
+        let result = await axios.post("http://localhost:3000/users/", {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          confirmPassword: this.confirmPassword,
+        });
+        
+        if (result.status == 201) {
+          localStorage.setItem("user-info", JSON.stringify(result.data));
+          this.$router.push({ name: "home" });
+        }
       }
     },
   },
@@ -132,6 +237,7 @@ $mainColor: #333333;
 .box-form {
   margin: auto;
   width: 80%;
+  height: max-content;
   background: #ffffff;
   border-radius: 10px;
   overflow: hidden;
@@ -233,6 +339,9 @@ $mainColor: #333333;
       border: none;
       outline: none;
       border-bottom: 2px solid #b0b3b9;
+    }
+    input.is-invalid {
+      border-bottom: 2px solid #EE0000;
     }
 
     .remember-me--forget-password {
