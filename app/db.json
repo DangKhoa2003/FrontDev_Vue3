@@ -133,6 +133,13 @@
       "password": "123456",
       "confirmPassword": "123456",
       "id": 1
+    },
+    {
+      "name": "Minh",
+      "email": "minh123@gmail.com",
+      "password": "12345",
+      "confirmPassword": "12345",
+      "id": 2
     }
   ]
 }

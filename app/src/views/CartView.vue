@@ -57,7 +57,7 @@
                     <div class="col-8">
                          <div class="row text-right">
                               <div class="col-3">
-                                   <h6 class="mt-2">Format</h6>
+                                   <h6 class="mt-2">Category</h6>
                               </div>
                               <div class="col-3">
                                    <h6 class="mt-2">Quantity</h6>
@@ -91,11 +91,11 @@
                                    <p class="mob-text">{{ prod.category }}</p>
                               </div>
                               <div class="col-3">
-                                   <div class="row d-flex justify-content-end px-3">
-                                        <p class="mb-0" id="cnt2">{{ prod.qty }}</p>
+                                   <div class="row d-flex justify-content-center px-3 align-content-center">
+                                        <p class="mb-0 h5" id="cnt2">{{ prod.qty }}</p>
                                         <div class="d-block flex-column plus-minus">
-                                             <button @click="AddQty(prod.id)" class="vsm-text plus">+</button>
-                                             <button @click="ReduceQty(prod.id)" class="vsm-text minus">-</button>
+                                             <button @click="AddQty(prod.id)" class="vsm-text plus px-2">+</button>
+                                             <button @click="ReduceQty(prod.id)" class="vsm-text minus px-2">-</button>
                                         </div>
                                    </div>
                               </div>
@@ -253,6 +253,7 @@ body {
      left: 2px;
      cursor: pointer;
      padding: auto;
+     font-size: 20px;
      height: 5px;
 
 }
@@ -263,6 +264,7 @@ body {
      height: 5px;
      top: 10px;
      left: 5px;
+     font-size: 20px;
      cursor: pointer;
 }
 
