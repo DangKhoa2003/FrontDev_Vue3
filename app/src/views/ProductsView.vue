@@ -30,21 +30,6 @@
     <div class="container">
       <div class="row">
         <div class="col-md-9">
-          <div class="row mb-4">
-            <div
-              class="col-md-12 d-flex justify-content-between align-items-center"
-            >
-              <h4 class="product-select">Select Types of Products</h4>
-              <select class="selectpicker" multiple>
-                <option>Brandy</option>
-                <option>Gin</option>
-                <option>Rum</option>
-                <option>Tequila</option>
-                <option>Vodka</option>
-                <option>Whiskey</option>
-              </select>
-            </div>
-          </div>
           <TransactionsPaginatedVue 
             :data="trans"
             :total-pages="Math.ceil(trans.length / 4)"

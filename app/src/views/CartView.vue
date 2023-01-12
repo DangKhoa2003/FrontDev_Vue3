@@ -1,6 +1,5 @@
 <!-- eslint-disable no-undef -->
 <template>
-
      <div class="ShoppingCart">
           <SideBar />
           
@@ -91,7 +90,7 @@
                                    <p class="mob-text">{{ prod.category }}</p>
                               </div>
                               <div class="col-3">
-                                   <div class="row d-flex justify-content-center px-3 align-content-center">
+                                   <div class="row d-flex justify-content-end px-5 align-content-center">
                                         <p class="mb-0 h5" id="cnt2">{{ prod.qty }}</p>
                                         <div class="d-block flex-column plus-minus">
                                              <button @click="AddQty(prod.id)" class="vsm-text plus px-2">+</button>
@@ -150,6 +149,7 @@
                     </div>
                </div>
           </div>
+          <FooterF />
      </div>
 </template>
 
@@ -157,11 +157,13 @@
 import swal from 'sweetalert2';
 import SideBar from '@/components/SideBar.vue';
 import { mapGetters, mapActions } from 'vuex';
+import FooterF from '@/components/FooterF.vue';
 
 export default {
      components: {
-          SideBar,
-     },
+    SideBar,
+    FooterF
+},
      data: function () {
           return {
                loaded: false,
