@@ -21,6 +21,7 @@ export default createStore({
   },
 
   mutations: {
+    /* A mutation that is used to set the products in the state. */
     SET_PRODUCTS(state, products) {
       state.products = products;
     },
@@ -29,9 +30,11 @@ export default createStore({
       state.product = product;
     },
 
+    /* A mutation that is used to set the transactions in the state. */
     loadTransactions(state, payload) {
       state.transactions = payload;
     },
+    /* Adding the product to the cart. */
     AddItemToCart(state, prod) {
      window.Swal = swal;
       const AddedItem = state.cart.find((product) => product.id === prod.id);

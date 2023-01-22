@@ -33,13 +33,13 @@
                 <div class="dbox w-100 text-center">
                   <div
                     class="icon d-flex align-items-center justify-content-center"
-                  >
-                    <span class="fa fa-map-marker"></span>
+                  >                   
+                    <svg class="iconSvg" width="30" height="30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) --><path fill="#fff" d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0z"/></svg>
                   </div>
                   <div class="text">
                     <p>
-                      <span>Address:</span> 198 West 21th Street, Suite 721 New
-                      York NY 10016
+                      <span>Address:</span> <a href="">198 West 21th Street, Suite 721 New
+                      York NY 10016</a>
                     </p>
                   </div>
                 </div>
