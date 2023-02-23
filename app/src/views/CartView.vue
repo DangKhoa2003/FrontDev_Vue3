@@ -14,9 +14,9 @@
                               <p class="breadcrumbs mb-0">
                                    <span class="mr-2"><a href="index.html">Home <i
                                                   class="fa fa-chevron-right"></i></a></span>
-                                   <span>Shopping Bag <i class="fa fa-chevron-right"></i></span>
+                                   <span>My Cart <i class="fa fa-chevron-right"></i></span>
                               </p>
-                              <h2 class="mb-0 bread">Shopping Bag</h2>
+                              <h2 class="mb-0 bread">My Cart</h2>
                          </div>
                     </div>
                </div>
@@ -28,7 +28,7 @@
 
                          <div class="card">
                               <div class="card-header">
-                                   <h5>Shopping Bag</h5>
+                                   <h5>My Cart</h5>
                               </div>
                               <div class="card-body cart">
                                    <div class="col-sm-12 empty-cart-cls text-center">
@@ -51,7 +51,7 @@
           <div class="container px-4 py-5 mx-auto" v-if="cart.length > 0">
                <div class="row d-flex justify-content-center">
                     <div class="col-4">
-                         <h4 class="heading">Shopping Bag</h4>
+                         <h4 class="heading">My Cart</h4>
                     </div>
                     <div class="col-8">
                          <div class="row text-right">
