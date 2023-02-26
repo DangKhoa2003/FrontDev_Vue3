@@ -47,7 +47,7 @@
       <h5>Login</h5>
       <p>
         Don't have an account?
-        <router-link to="/signup">Creat Your Account</router-link> it takes less
+        <router-link to="/signup">Create Your Account</router-link> it takes less
         than a minute
       </p>
       <div class="inputs">

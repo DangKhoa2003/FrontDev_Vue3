@@ -90,7 +90,6 @@
               {{ errors.confirmPassword }}
             </span>
             <br>
-            
           </div>
         </div>
   
